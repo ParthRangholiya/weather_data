@@ -31,7 +31,7 @@ class HomeView extends GetView<HomeController> {
             ElevatedButton.icon(
               onPressed: () {
                 if (controller.citynameController.text.isNotEmpty) {
-                  controller.gettemp(controller.citynameController.text);
+                  controller.getWeatherDataByLatLong();
                 } else {
                   Get.rawSnackbar(
                     title: "City name is required",
@@ -49,6 +49,10 @@ class HomeView extends GetView<HomeController> {
                         color: Colors.white,
                       ),
                     );
+                  } else if (controller.wedharstates == States.succses) {
+                    return const Icon(Icons.done);
+                  } else if (controller.wedharstates == States.error) {
+                    return const Icon(Icons.cancel_outlined);
                   } else {
                     return const Icon(Icons.search);
                   }
