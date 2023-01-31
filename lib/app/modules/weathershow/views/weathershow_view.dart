@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
 import '../controllers/weathershow_controller.dart';
 
 class WeathershowView extends GetView<WeathershowController> {

@@ -30,14 +30,19 @@ class HomeView extends GetView<HomeController> {
             ),
             ElevatedButton.icon(
               onPressed: () {
-                if (controller.citynameController.text.isNotEmpty) {
+                if (controller.citynameController.text.isEmpty) {
                   controller.getWeatherDataByLatLong();
-                } else {
-                  Get.rawSnackbar(
-                    title: "City name is required",
-                    message: "Please enter a city name",
-                  );
                 }
+                if (controller.citynameController.text.isNotEmpty) {
+                  controller
+                      .getWeatherDataByCity(controller.citynameController.text);
+                }
+                //  else {
+                //   Get.rawSnackbar(
+                //     title: "City name is required",
+                //     message: "Please enter a city name",
+                //   );
+                // }
               },
               icon: Obx(
                 () {

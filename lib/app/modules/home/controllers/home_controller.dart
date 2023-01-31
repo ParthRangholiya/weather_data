@@ -13,7 +13,7 @@ enum States { initial, succses, loding, error }
 class HomeController extends GetxController {
   TextEditingController citynameController = TextEditingController();
 
-  final _data = Rx<Weather?>(null);
+  final _data = Rx<Weather?>(null); 
   Weather? get weather => _data.value;
   set data(Weather? value) => _data.value = value;
 
@@ -49,7 +49,6 @@ class HomeController extends GetxController {
   Future<void> getWeatherDataByCity(String cityname) async {
     try {
       wedharstates = States.loding;
-
       final response = await dio.get(
         URLs.urls,
         queryParameters: {
@@ -59,14 +58,19 @@ class HomeController extends GetxController {
         },
       );
       data = Weather.fromJson(response.data);
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
       wedharstates = States.succses;
       citynameController.clear();
-      wedharstates = States.initial;
       Get.toNamed(Routes.WEATHERSHOW);
+      wedharstates = States.initial;
     } catch (e) {
       var message = e as DioError;
       wedharstates = States.error;
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
       Get.rawSnackbar(
         title: "Error",
         message: "${message.response?.data["message"]}",
@@ -119,6 +123,7 @@ class HomeController extends GetxController {
       citynameController.clear();
       wedharstates = States.succses;
       Get.toNamed(Routes.WEATHERSHOW);
+      wedharstates = States.initial;
     } on DioError catch (err) {
       citynameController.clear();
       Get.rawSnackbar(title: "Error", message: err.response?.data["message"]);
